@@ -10,7 +10,7 @@ const Navbar = () => {
         <img className='logo' src={assets.logo2} alt="" />
         <p>Admin Panel</p>
       </div>
-      <img className='profile' src={assets.profile_image2} alt="" />
+      <img className='profile' src={assets.Bikash_Profile} alt="" />
     </div>
   )
 }

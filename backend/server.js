@@ -1,11 +1,14 @@
 import express  from "express"
+import mongoose from "mongoose"
 import cors from 'cors'
-import { connectDB } from "./config/db.js"
+// import { connectDB } from "./config/db.js"
 import userRouter from "./routes/userRoute.js"
 import foodRouter from "./routes/foodRoute.js"
 import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
+
+const dbUrl=process.env.ATLASDB_URL
 
 // app config
 const app = express()
@@ -17,7 +20,16 @@ app.use(express.json())
 app.use(cors())
 
 // db connection
-connectDB()
+
+
+mongoose.connect(dbUrl)
+  .then(() => {
+    console.log("DB Connected");
+  })
+  .catch((err) => {
+    console.log("DB Connection FAILED:", err);
+  });
+
 
 // api endpoints
 app.use("/api/user", userRouter)

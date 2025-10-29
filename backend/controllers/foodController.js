@@ -15,6 +15,15 @@ const listFood = async (req, res) => {
 
 // add food
 const addFood = async (req, res) => {
+    if (!req.file) {
+        console.log("--- MULTER ERROR ---");
+        console.log("req.file is UNDEFINED. The file was not received.");
+        console.log("This is a CLIENT-SIDE (Postman) problem.");
+        console.log("----------------------");
+        
+        // Send a clean error message instead of crashing
+        return res.json({ success: false, message: "Error: File was not received by server." });
+    }
 
     let image_filename = `${req.file.filename}`
 
