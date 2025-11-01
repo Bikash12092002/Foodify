@@ -6,6 +6,8 @@ import './List.css';
 
 const List = () => {
 
+  const url = "http://localhost:4000";
+
   const [list,setList] = useState([]);
   
   const fetchList = async () => {

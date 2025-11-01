@@ -6,8 +6,8 @@ import './Add.css';
 
 const Add = () => {
 
-    // const url="http://localhost:4000"
-    const url = "https://food-delivery-backend-au4q.onrender.com"
+     const url="http://localhost:4000"
+    //const url = "https://food-delivery-backend-au4q.onrender.com"
     const [data, setData] = useState({
         name: "",
         description: "",

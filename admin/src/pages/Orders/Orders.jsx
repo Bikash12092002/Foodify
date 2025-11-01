@@ -6,6 +6,7 @@ import { assets, url } from '../../assets/assets';
 
 const Order = () => {
 
+  const url = "http://localhost:4000";
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {

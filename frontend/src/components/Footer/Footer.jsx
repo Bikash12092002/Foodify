@@ -13,9 +13,9 @@ const Footer = () => {
               influencers to boost traffic and sales, leveraging AI-driven matchmaking. It aims to help 
               restaurants, particularly those struggling, find visibility and increase online orders.</p>
             <div className="footer-social-icons">
-                <a href="https://www.facebook.com/profile.php?id=61550841212971"><img src={assets.facebook_icon} alt="" /></a>
-                <a href="https://x.com/GobindaMan17679"><img src={assets.twitter_icon} alt="" /></a>
-                <a href="https://www.linkedin.com/in/gobinda-mandal-357159292/"><img src={assets.linkedin_icon} alt="" /></a>
+                <a href="https://www.facebook.com/share/1PoZ3wbPMK/" target='_blank' ><img src={assets.facebook_icon} alt='' /></a>
+                <a href="https://x.com/BikashB20846264" target='_blank'><img src={assets.twitter_icon} alt="" /></a>
+                <a href="https://www.linkedin.com/in/bikash-kumar-barik-56b5a3385/ "  target='_blank'><img src={assets.linkedin_icon} alt="" /></a>
             </div>
         </div>
        <div className="footer-content-right">
@@ -25,12 +25,12 @@ const Footer = () => {
               <input type="text" name="name" id="name" placeholder="Your Name" required></input>
               <input type="email" name="email" id="email" placeholder="Your Email" required></input>
               <textarea name="message" rows="6" id="msg" placeholder="Your Message"></textarea>
-              <button type="submit" class="btn btn2" id="btn" onclick="send()">Submit</button>          
+              <button type="submit" class="btn btn2" id="btn" onClick="send()">Submit</button>          
             </form>
         </div>
       </div>
       <hr />
-      <p className="footer-copyright">Copyright 2024 © Foodify.com - All Right Reserved.</p>
+      <p className="footer-copyright">Copyright 2025 © Foodify.com - All Right Reserved.</p>
     </div>
   )
 }
