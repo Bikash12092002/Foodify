@@ -5,8 +5,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
-    //const url = "https://foodify-backend-b6ei.onrender.com"
-     const url = "http://localhost:4000"
+    const url = "https://foodify-backend-n5sn.onrender.com"
+     //const url = "http://localhost:4000"
     const [food_list, setFoodList] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState("")
