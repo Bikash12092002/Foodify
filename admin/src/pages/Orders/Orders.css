@@ -26,6 +26,28 @@
     padding: 10px;
     outline:none;
 }
+
+.order-item-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 13px;
+}
+.order-item-method b {
+    text-transform: uppercase;
+}
+.order-payment-status {
+    font-weight: 500;
+}
+.cod {
+    color: orange;
+}
+.paid {
+    color: green;
+}
+.failed {
+    color: red;
+}
 @media(max-width:1000px){
     .order-item{
         font-size: 12px;

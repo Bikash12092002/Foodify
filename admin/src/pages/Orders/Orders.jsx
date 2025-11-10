@@ -63,7 +63,17 @@ const Order = () => {
               <p className='order-item-phone'>{order.address.phone}</p>
             </div>
             <p>Items : {order.items.length}</p>
-            <p>₹{order.amount}</p>
+            <div className='order-item-payment'>
+    <p><b>Amount:</b> ₹{order.amount}</p>
+    <p className='order-item-method'>Method: <b>{order.paymentMethod}</b></p>
+    {order.paymentMethod === 'cod' ? (
+        <p className='order-payment-status cod'>Pay on Delivery</p>
+    ) : (
+        <p className='order-payment-status {order.payment ? "paid" : "failed"}'>
+            {order.payment ? "Paid" : "Failed"}
+        </p>
+    )}
+</div>
             <select onChange={(e)=>statusHandler(e,order._id)} value={order.status} name="" id="">
               <option value="Food Processing">Food Processing</option>
               <option value="Out for delivery">Out for delivery</option>

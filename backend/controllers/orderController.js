@@ -128,27 +128,35 @@ const deliveryCharge = 50;
 
 // Placing User Order for Frontend
 const placeOrder = async (req, res) => {
+    const { userId, items, amount, address, paymentMethod } = req.body;
     try {
         const newOrder = new orderModel({
-            userId: req.body.userId,
-            items: req.body.items,
-            amount: req.body.amount,
-            address: req.body.address,
+            userId: userId,
+            items: items,
+            amount: amount,
+            address: address,
+            paymentMethod: paymentMethod // Save the payment method
         })
         await newOrder.save();
         await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
         // Stripe expects amounts in paise (1 INR = 100 paise)
-        const line_items = req.body.items.map((item) => ({
-            price_data: {
-                currency: "inr",
-                product_data: {
-                    name: item.name
+        if (paymentMethod === "cod") {
+            // If COD, just send success. No Stripe needed.
+            res.json({ success: true, message: "Order placed successfully (COD)" });
+        } 
+        else if (paymentMethod === "stripe") {
+            // If Stripe, create the payment session
+            const line_items = req.body.items.map((item) => ({
+                price_data: {
+                    currency: "inr",
+                    product_data: {
+                        name: item.name
+                    },
+                    unit_amount: Math.round(item.price * 100)
                 },
-                unit_amount: Math.round(item.price * 100) // Convert INR to paise
-            },
-            quantity: item.quantity
-        }))
+                quantity: item.quantity
+            }))
 
         // Add delivery charge
         line_items.push({
@@ -170,6 +178,10 @@ const placeOrder = async (req, res) => {
         });
 
         res.json({ success: true, session_url: session.url });
+        }
+        else {
+            res.json({ success: false, message: "Invalid payment method" });
+        }
 
     } catch (error) {
         console.log(error);
