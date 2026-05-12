@@ -212,13 +212,30 @@ const userOrders = async (req, res) => {
     }
 }
 
+// backend/controllers/orderController.js
+
 const updateStatus = async (req, res) => {
-    console.log(req.body);
     try {
-        await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
-        res.json({ success: true, message: "Status Updated" })
+        const { orderId, status } = req.body;
+        
+        // 1. Find the current order first
+        const order = await orderModel.findById(orderId);
+
+        // 2. BLOCK the update if the order is already cancelled
+        if (order.status === "Cancelled") {
+            return res.json({ 
+                success: false, 
+                message: "Cannot update status: This order is already cancelled and refunded." 
+            });
+        }
+
+        // 3. Otherwise, proceed with the update
+        await orderModel.findByIdAndUpdate(orderId, { status: status });
+        res.json({ success: true, message: "Status Updated Successfully" });
+        
     } catch (error) {
-        res.json({ success: false, message: "Error" })
+        console.log(error);
+        res.json({ success: false, message: "Error updating status" });
     }
 }
 
