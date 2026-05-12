@@ -14,6 +14,18 @@ const MyOrders = () => {
     setData(response.data.data)
   }
 
+  const handleCancel = async (orderId) => {
+    if (window.confirm("Are you sure you want to cancel and refund this order?")) {
+        const response = await axios.post(url + "/api/order/cancel", { orderId }, { headers: { token } });
+        if (response.data.success) {
+            toast.success(response.data.message);
+            fetchOrders(); // Refresh order list to show "Cancelled" status
+        } else {
+            toast.error(response.data.message);
+        }
+    }
+  };
+
   useEffect(()=>{
     if (token) {
       fetchOrders();
@@ -40,7 +52,13 @@ const MyOrders = () => {
                 <p>₹ {order.amount}.00</p>
                 <p>Items: {order.items.length}</p>
                 <p><span>&#x25cf;</span> <b>{order.status}</b></p>
-                <button>Track Order</button>
+                {order.status === "Food Processing" ? (
+                    <button onClick={() => handleCancel(order._id)} className="cancel-btn" style={{backgroundColor: '#FFE1E1', color: 'red', border: '1px solid red'}}>
+                        Cancel Order
+                    </button>
+                ) : (
+                    <button>Track Order</button>
+                )}
             </div>
           )
         })}
