@@ -16,15 +16,27 @@ const MyOrders = () => {
 
   const handleCancel = async (orderId) => {
     if (window.confirm("Are you sure you want to cancel and refund this order?")) {
-        const response = await axios.post(url + "/api/order/cancel", { orderId }, { headers: { token } });
-        if (response.data.success) {
-            toast.success(response.data.message);
-            fetchOrders(); // Refresh order list to show "Cancelled" status
-        } else {
-            toast.error(response.data.message);
+        try {
+            // 1. Send request to backend
+            const response = await axios.post(url + "/api/order/cancel", { orderId }, { headers: { token } });
+            
+            // 2. If the backend returns success:true
+            if (response.data.success) {
+                // Display the success message to the user
+                toast.success(response.data.message || "Order successfully cancelled");
+                
+                // 3. Immediately refresh the list so the status changes on screen
+                await fetchOrders(); 
+            } else {
+                // If backend says no (e.g., order already delivered)
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.error("Cancellation error:", error);
+            toast.error("Something went wrong with the cancellation.");
         }
     }
-  };
+};
 
   useEffect(()=>{
     if (token) {
