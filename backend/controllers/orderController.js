@@ -238,4 +238,49 @@ const verifyOrder = async (req, res) => {
     }
 }
 
-export { listOrders, placeOrder, updateStatus, userOrders, verifyOrder };
+// backend/controllers/orderController.js
+
+const cancelOrder = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const order = await orderModel.findById(orderId);
+
+        if (!order) {
+            return res.json({ success: false, message: "Order not found" });
+        }
+
+        // Only allow cancellation if order is in a cancellable status (e.g., "Food Processing")
+        if (order.status === "Food Processing") {
+            
+            // Check if payment was made via Stripe
+            if (order.payment === true && order.paymentMethod === "stripe") {
+                try {
+                    // Create a refund using the PaymentIntent ID
+                    const refund = await stripe.refunds.create({
+                        payment_intent: order.paymentIntentId, // Retrieved from your orderModel
+                        reason: 'requested_by_customer' // Optional reason
+                    });
+                    console.log("Refund successful:", refund.id);
+                } catch (stripeError) {
+                    console.error("Stripe Refund Error:", stripeError.message);
+                    return res.json({ success: false, message: "Refund failed, please contact support" });
+                }
+            }
+
+            // Update status in your database
+            await orderModel.findByIdAndUpdate(orderId, { 
+                status: "Cancelled", 
+                payment: false // Reset payment status to reflect the refund
+            });
+
+            res.json({ success: true, message: "Order cancelled and refund initiated." });
+        } else {
+            res.json({ success: false, message: "Order cannot be cancelled at this stage." });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Server error during cancellation" });
+    }
+};
+
+export { listOrders, placeOrder, updateStatus, userOrders, verifyOrder,cancelOrder };
