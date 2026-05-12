@@ -74,10 +74,11 @@ const Order = () => {
         </p>
     )}
 </div>
-            <select onChange={(e)=>statusHandler(e,order._id)} value={order.status} name="" id="">
+            <select onChange={(e)=>statusHandler(e,order._id)} value={order.status} name="" id="" disabled={order.status === "Cancelled"}>
               <option value="Food Processing">Food Processing</option>
               <option value="Out for delivery">Out for delivery</option>
               <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
             </select>
           </div>
         ))}

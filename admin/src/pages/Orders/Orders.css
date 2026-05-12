@@ -62,3 +62,10 @@
         width: 40px;
     }
 }
+
+.order-item select:disabled {
+    background-color: #ffe1e1; /* Light red background */
+    cursor: not-allowed;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+}
