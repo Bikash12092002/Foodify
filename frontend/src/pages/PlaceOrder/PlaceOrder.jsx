@@ -124,7 +124,7 @@ const PlaceOrder = () => {
                         <input type="radio" id="stripe" name="payment" value="stripe"
                             checked={paymentMethod === "stripe"}
                             onChange={() => setPaymentMethod("stripe")} />
-                        <label htmlFor="stripe">Pay Online (Stripe)</label>
+                        <label htmlFor="stripe">Pay Online (UPI, Cards)</label>
                     </div>
                 </div>
                 <button className='place-order-submit' type='submit'>
