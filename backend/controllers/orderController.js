@@ -175,6 +175,7 @@ const placeOrder = async (req, res) => {
             cancel_url: `${frontend_URL}/verify?success=false&orderId=${newOrder._id}`,
             line_items: line_items,
             mode: 'payment',
+            payment_method_types: ['card', 'upi'],
         });
 
         res.json({ success: true, session_url: session.url });
