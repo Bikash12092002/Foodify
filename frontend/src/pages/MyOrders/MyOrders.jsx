@@ -52,13 +52,19 @@ const MyOrders = () => {
                 <p>₹ {order.amount}.00</p>
                 <p>Items: {order.items.length}</p>
                 <p><span>&#x25cf;</span> <b>{order.status}</b></p>
-                {order.status === "Food Processing" ? (
-                    <button onClick={() => handleCancel(order._id)} className="cancel-btn" style={{backgroundColor: '#FFE1E1', color: 'red', border: '1px solid red'}}>
-                        Cancel Order
-                    </button>
-                ) : (
-                    <button>Track Order</button>
-                )}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <button onClick={fetchOrders}>Track Order</button>
+            
+            {/* Show Cancel button only if the Admin hasn't moved the order past 'Food Processing' */}
+            {order.status === "Food Processing" && (
+                <button 
+                    onClick={() => handleCancel(order._id)} 
+                    style={{ backgroundColor: '#ff4d4d', color: 'white', border: 'none', padding: '10px', borderRadius: '4px', cursor: 'pointer' }}
+                >
+                    Cancel Order
+                </button>
+            )}
+        </div>
             </div>
           )
         })}
