@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <>
-    <ToastContainer/>
+    <ToastContainer position="top-right" autoClose={3000}/>
     {showLogin?<LoginPopup setShowLogin={setShowLogin}/>:<></>}
       <div className='app'>
         <Navbar setShowLogin={setShowLogin}/>
